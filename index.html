@@ -10,37 +10,39 @@
         </head>
 
     <body>
-        <input type="text" id="display" value="1234" readonly>
-        <button class="clear">Clear</button>
-        <button class="operator">%</button>
-        <button class="operator">/</button>
-
+       <div class="calculator">
+        <input type="text" id="display" value="0" readonly>
+        <div class="calculator-buttons">
+        <div class="digits">
+        <button class="clear">AC</button>
+        <button class="digit">%</button>
+        <button class="digit">√x </button>
         <button class="digit">7</button>
         <button class="digit">8</button>
         <button class="digit">9</button>
-        <button class="operator">*</button>
-
-        <button class="digit">4</button>
+         <button class="digit">4</button>
         <button class="digit">5</button>
         <button class="digit">6</button>
-        <button class="operator">-</button>
-
         <button class="digit">1</button>
         <button class="digit">2</button>
         <button class="digit">3</button>
+         <button class="digit">0</button>
+        <button class="digit">.</button>
+        <button class="digit">+/-</button>
+            </div>
+        
+        
+        <div class="operators">
+        <button class="operator">/</button>
+        <button class="operator">*</button>
+        <button class="operator">-</button>
         <button class="operator">+</button>
+        <button class="equals">=</button>
+  
+       </div>
 
-        <button class="digit">0</button>
-        <button class="dot">.</button>
-        
-        <button class="sum">=</button>
-
-        
-     
-
-        
-        
-
+        </div>
+    </div>
         <script src="script.js"></script>
     </body>
     </html>

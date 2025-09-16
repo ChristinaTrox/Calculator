@@ -40,6 +40,7 @@ function subtract(a , b) {
   const digitButtons = document.querySelectorAll(".digit");
   const operatorButtons = document.querySelectorAll(".operator");
   const equals = document.querySelector(".equals");
+  const clear = document.querySelector(".clear");
 
   /* Initial check of the functionality of the display
   let currentInput = "";
@@ -79,7 +80,15 @@ function subtract(a , b) {
         firstOperand = displayValue;
         operator = button.textContent;
         waitingForSecondOperand = true;
+   } else {
+       secondOperand = displayValue;
+       result = operate(operator, firstOperand, secondOperand);
+       displayValue = result;
+       firstOperand = result;
+       operator = button.textContent;
+       waitingForSecondOperand = true;
    }
+     updateDisplay();
    });
   });
 
@@ -90,4 +99,14 @@ function subtract(a , b) {
         updateDisplay();
    });
   
+
+   clear.addEventListener( "click", () => {
+      firstOperand = "";
+      secondOperand = "";
+      operator = "";
+      displayValue = "0";
+      waitingForSecondOperand = false;
+      updateDisplay();
+   });
+
    

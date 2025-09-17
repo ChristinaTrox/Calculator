@@ -101,14 +101,16 @@ function subtract(a , b) {
   });
 
    equals.addEventListener( "click", () => {
+         if ( firstOperand === "" || operator === "" || displayValue === "") {
+           return; }
         secondOperand = displayValue;
-        result = operate(operator, firstOperand,secondOperand);
+        let result = operate(operator, firstOperand,secondOperand);
         if (result.toString().includes(".")) {
             result = parseFloat(result.toFixed(3)); }
         displayValue = result;
         updateDisplay(); 
-         
-
+        firstOperand = result;
+        waitingForSecondOperand = true;
    });
   
 

@@ -65,10 +65,13 @@ function subtract(a , b) {
       button.addEventListener( "click", () => {
       const digit = button.textContent;
        if (waitingForSecondOperand) {
-         displayValue = digit;
+         displayValue = digit === "." ? "0." : digit;
          waitingForSecondOperand = false;
        } else {
-         displayValue = displayValue === '0' ? digit : displayValue + digit;
+        if (digit === "." && displayValue,includes(".")) {
+          return;
+        }
+         displayValue = displayValue === "0" && digit !== "." ? digit : displayValue + digit;
        }
        updateDisplay();
     });
@@ -83,11 +86,16 @@ function subtract(a , b) {
    } else {
        secondOperand = displayValue;
        result = operate(operator, firstOperand, secondOperand);
+
+       if (result.toString().includes(".")) 
+        result = parseFloat(result.toFixed(3));
+         
        displayValue = result;
        firstOperand = result;
        operator = button.textContent;
        waitingForSecondOperand = true;
-   }
+       }
+       displayValue = result;
      updateDisplay();
    });
   });
@@ -95,8 +103,12 @@ function subtract(a , b) {
    equals.addEventListener( "click", () => {
         secondOperand = displayValue;
         result = operate(operator, firstOperand,secondOperand);
+        if (result.toString().includes(".")) {
+            result = parseFloat(result.toFixed(3)); }
         displayValue = result;
-        updateDisplay();
+        updateDisplay(); 
+         
+
    });
   
 
@@ -108,5 +120,7 @@ function subtract(a , b) {
       waitingForSecondOperand = false;
       updateDisplay();
    });
+
+
 
    

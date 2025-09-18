@@ -28,10 +28,18 @@ function subtract(a , b) {
  console.log(add(firstNumber, secondNumber)); */
 
  function operate(operator, a, b) {
+  a = Number(a);
+  b = Number(b);
     if (operator === "+") return add(a, b);
     if (operator === "-") return subtract(a, b);
     if (operator === "*") return multiply(a, b);
-    if (operator === "/") return divide(a, b);
+    if (operator === "/") {
+      if (Number(b) === 0) {
+         return "Can't divide by 0";
+      } else {
+     return divide(a, b);
+      }
+      }
  } 
   
   
@@ -68,7 +76,7 @@ function subtract(a , b) {
          displayValue = digit === "." ? "0." : digit;
          waitingForSecondOperand = false;
        } else {
-        if (digit === "." && displayValue,includes(".")) {
+        if (digit === "." && displayValue.includes(".")) {
           return;
         }
          displayValue = displayValue === "0" && digit !== "." ? digit : displayValue + digit;

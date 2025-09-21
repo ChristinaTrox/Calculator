@@ -71,9 +71,7 @@ function subtract(a , b) {
 
      }
 
-    digitButtons.forEach(button => {
-      button.addEventListener( "click", () => {
-      const digit = button.textContent;
+    function handleDigit(digit) {
       if (justCalculated) {
         displayValue = "";
         justCalculated = false;
@@ -89,19 +87,18 @@ function subtract(a , b) {
        }
        
        updateDisplay();
-    });
-   }); 
+    };
+   
 
-     operatorButtons.forEach(button => {
-     button.addEventListener( "click", () => {
-      const clickedOperator = button.textContent;
+     function handleOperator(clickedOperator) {
 
       if (firstOperand === "") { 
         firstOperand = displayValue;
         operator = clickedOperator;
         waitingForSecondOperand = true;
-   } else {
-    if(waitingForSecondOperand) {
+        return;
+   } 
+   if(waitingForSecondOperand) {
       operator = clickedOperator;
       return;
     }
@@ -113,44 +110,76 @@ function subtract(a , b) {
          
        displayValue = result;
        firstOperand = result;
-       operator = button.textContent;
+       operator = clickedOperator;
        waitingForSecondOperand = true;
-       }
-       displayValue = result;
+       
+      
      updateDisplay();
-   });
-  });
-
-   equals.addEventListener( "click", () => {
-         if ( firstOperand === "" || operator === "" || displayValue === "") {
-           return; }
-        secondOperand = displayValue;
-        let result = operate(operator, firstOperand,secondOperand);
-        if (result.toString().includes(".")) {
-            result = parseFloat(result.toFixed(3)); }
-        displayValue = result;
-        updateDisplay(); 
-        firstOperand = result;
-        waitingForSecondOperand = true;
-        justCalculated = true;
-   });
+   }
   
 
-   clear.addEventListener( "click", () => {
-      firstOperand = "";
-      secondOperand = "";
-      operator = "";
+function handleEquals() {
+     if (firstOperand === "" || operator === "" || displayValue === "") {
+      return;
+     }
+     secondOperand = displayValue;
+     let result = operate(operator, firstOperand, secondOperand);
+     if (result.toString().includes(".")) {
+      result = parseFloat(result.toFixed(3));
+     }
+
+     displayValue = result;
+     updateDisplay();
+     firstOperand = result;
+     waitingForSecondOperand = true;
+     justCalculated = true;
+   }
+   equals.addEventListener("click", handleEquals);
+  
+
+ function handleClear() {
+    firstOperand = "";
+    secondOperand = "";
+    operator = "";
+    displayValue = "0";
+    waitingForSecondOperand = false;
+    updateDisplay();
+   }
+   clear.addEventListener("click", handleClear);
+
+ function handleBackspace() {
+    displayValue = displayValue.slice(0, -1);
+    if (displayValue === "") {
       displayValue = "0";
-      waitingForSecondOperand = false;
-      updateDisplay();
+    }
+    updateDisplay();
+   }
+   backspaceButton.addEventListener("click", handleBackspace);
+
+   document.addEventListener( "keydown", (event) => {
+    const key = event.key;
+    if("0123456789".includes(key)) {
+      handleDigit(key);
+    } else if ("+-*/".includes(key)){
+         handleOperator(key);
+    } else if (key === "=" || key === "Enter"){
+        handleEquals();
+    } else if (key === "Backspace") {
+          handleBackspace();
+    } else if (key.toLowerCase() === "c") {
+         handleClear();
+    }
    });
 
-backspaceButton.addEventListener("click", () => {
-     displayValue = displayValue.slice(0, -1);
-     if(displayValue === "") {
-      displayValue = "0";
-     }
-     updateDisplay();
-});
+  digitButtons.forEach(button => {
+    button.addEventListener("click", () => handleDigit(button.textContent));
+  });
+
+  operatorButtons.forEach(button => {
+    button.addEventListener("click", () => handleOperator(button.textContent));
+  });
+ 
+
+  
 
    

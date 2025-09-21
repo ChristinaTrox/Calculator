@@ -49,6 +49,7 @@ function subtract(a , b) {
   const operatorButtons = document.querySelectorAll(".operator");
   const equals = document.querySelector(".equals");
   const clear = document.querySelector(".clear");
+  const backspaceButton = document.querySelector("#backspace");
 
   /* Initial check of the functionality of the display
   let currentInput = "";
@@ -144,6 +145,12 @@ function subtract(a , b) {
       updateDisplay();
    });
 
-
+backspaceButton.addEventListener("click", () => {
+     displayValue = displayValue.slice(0, -1);
+     if(displayValue === "") {
+      displayValue = "0";
+     }
+     updateDisplay();
+});
 
    

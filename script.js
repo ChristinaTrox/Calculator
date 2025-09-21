@@ -62,6 +62,7 @@ function subtract(a , b) {
    let secondOperand = "";
    let displayValue = '0';
    let waitingForSecondOperand = false;
+   let justCalculated = false;
 
     function updateDisplay() {
 
@@ -72,6 +73,10 @@ function subtract(a , b) {
     digitButtons.forEach(button => {
       button.addEventListener( "click", () => {
       const digit = button.textContent;
+      if (justCalculated) {
+        displayValue = "";
+        justCalculated = false;
+       }
        if (waitingForSecondOperand) {
          displayValue = digit === "." ? "0." : digit;
          waitingForSecondOperand = false;
@@ -81,19 +86,26 @@ function subtract(a , b) {
         }
          displayValue = displayValue === "0" && digit !== "." ? digit : displayValue + digit;
        }
+       
        updateDisplay();
     });
    }); 
 
      operatorButtons.forEach(button => {
      button.addEventListener( "click", () => {
+      const clickedOperator = button.textContent;
+
       if (firstOperand === "") { 
         firstOperand = displayValue;
-        operator = button.textContent;
+        operator = clickedOperator;
         waitingForSecondOperand = true;
    } else {
+    if(waitingForSecondOperand) {
+      operator = clickedOperator;
+      return;
+    }
        secondOperand = displayValue;
-       result = operate(operator, firstOperand, secondOperand);
+       let result = operate(operator, firstOperand, secondOperand);
 
        if (result.toString().includes(".")) 
         result = parseFloat(result.toFixed(3));
@@ -119,6 +131,7 @@ function subtract(a , b) {
         updateDisplay(); 
         firstOperand = result;
         waitingForSecondOperand = true;
+        justCalculated = true;
    });
   
 
